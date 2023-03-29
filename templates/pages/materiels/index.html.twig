@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymRecipe - Materiels{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Liste de matériels</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="login-popup">
+            <div class="form-popup" id="popupForm">
+                <form class="form-container">
+                    <h2>Information sur le matériel</h2>
+                    <p>Id: <strong id="idMateriel"></strong></p>
+                    <p>Nom: <strong id="nomMateriel"></strong></p>
+                    <p>Prix: <strong id="prixMateriel"></strong></p>
+                    <p>Quantité: <strong id="quantiteMateriel"></strong></p>
+                    <p>Date de création: <strong id="dateCreationMateriel"></strong></p>
+                    <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+                </form>
+            </div>
+        </div>
+        <a href="{{path('materiels.ajout')}}" class="btn btn-dark">Créer un matériel</a>
+        <div class='row mt-4'>
+            <div class='col'>
+                <table id="datatable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Nom du matériel</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>décrémenter</th>
+                            <th>Date de création</th>
+                            <th>pdf</th>
+                            <th>Info</th>
+                            <th>Modifier</th>
+                            <th>Suppresion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for materiels in donnees %}
+                            {% if materiels.quantite != 0 %}
+                                <tr class="table-dark">
+                                    <th scope="row">{{materiels.id}}</th>
+                                    <td>{{materiels.nom}}</td>
+                                    <td>{{materiels.prix}}</td>
+                                    <td>{{materiels.quantite}}</td>
+                                    <td><a href="{{path('materiels.moins', {id: materiels.id})}}" class="btn btn-dark">➖</a></td>
+                                    <td>{{materiels.dateCreation|date("d/m/Y")}}</td>
+                                    <td><a href="{{path('materiels.pdf', {id: materiels.id})}}" class="btn btn-dark">pdf</a></td>
+                                    <td><a data-id="{{materiels.id}}" onclick="openForm()" class="btn btn-info ajaxVoirMateriel">Voir</a></td>
+                                    <td><a href="{{path('materiels.edit', {id: materiels.id})}}" class="btn btn-primary">Modifier</a></td>
+                                    <td><a href="{{path('materiels.delete', {id: materiels.id})}}" class="btn btn-danger">Supprimer</a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+    </div>
+{% endblock %}

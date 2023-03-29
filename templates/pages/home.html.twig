@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} SymRecipe - Home {% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Bienvenue sur ma page d'accueil</h1>
+        <a href="{{path('materiels.index')}}" class="btn btn-dark">Cliquer ici pour voir la liste</a>
+    </div>
+{% endblock %}
